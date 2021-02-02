@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="havis.device.rf-empty" default="publish" xmlns:ivy="antlib:org.apache.ivy.ant">
+
+	<property file="${basedir}/build.properties" />
+
+	<import>
+		<url url="${ivy.url}/ant/default.xml" />
+	</import>
+
+	<target name="clean-cache" description="Cleans the ivy cache">
+		<clean-cache />
+	</target>
+
+	<target name="clean-all" description="Cleans the project and ivy cache">
+		<clean-all />
+	</target>
+
+	<target name="compile">
+		<compile dst="${build.dir.classes}">
+			<src path="${src.main.dir}" />
+		</compile>
+	</target>
+
+	<target name="jar" depends="compile" description="Builds a JAR file from the project.">
+		<jar-bin />
+	</target>
+
+	<target name="deb" depends="jar">
+		<deb dst="${build.dir}/tar" name="50_${basename}">
+			<ivy:retrieve pattern="${dst.dir}/bundle/[artifact].[ext]" conf="runtime" />
+		</deb>
+	</target>
+	
+	<target name="app" depends="deb">
+		<app deb="false">
+			<ivy:retrieve pattern="${build.dir}/tar/[artifact].[ext]" conf="deb" />
+		</app>
+	</target>
+
+	<target name="publish" depends="app" description="Publishes the JAR to the repository">
+		<publish jar="false" app="false" />
+	</target>
+
+	<target name="standalone" depends="app">
+        <standalone deb="false" />
+		<exec executable="dpkg">
+			<arg value="-x"/>
+			<arg value="${build.dir}/havis.device.rf.deb"/>
+			<arg value="${build.dir}/deb"/>
+		</exec>
+	</target>
+</project>

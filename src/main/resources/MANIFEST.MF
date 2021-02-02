@@ -1,0 +1,22 @@
+Bundle-Name: Ha-VIS Empty RF Device
+Bundle-SymbolicName: havis.device.rf-empty
+Bundle-Activator: havis.device.rf.empty.osgi.Activator
+Bundle-Version: 2.6.0
+Application-Name: RFID Hardware
+Implementation-Version: 2.6
+Bundle-ManifestVersion: 2
+Bundle-Vendor: HARTING IT_SD
+Havis-Bundle: /OSGI-INF/havis.device.rf-empty.properties
+Import-Package: 
+ havis.device.rf,
+ havis.device.rf.capabilities,
+ havis.device.rf.common,
+ havis.device.rf.common.util,
+ havis.device.rf.configuration,
+ havis.device.rf.exception,
+ havis.device.rf.tag,
+ havis.device.rf.tag.operation,
+ havis.device.rf.tag.result,
+ org.osgi;resolution:=optional,
+ org.osgi.framework;resolution:=optional
+
